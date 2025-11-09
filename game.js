@@ -1,6 +1,21 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 let w, h;
+// Disable pinch and double-tap zoom in Safari
+document.addEventListener('touchstart', function(event) {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(event) {
+  const now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
 
 function resize() {
   w = canvas.width = window.innerWidth;
