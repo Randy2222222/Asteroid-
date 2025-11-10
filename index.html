@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,10 +52,21 @@
     #fire { left: 160px; bottom: 40px; }
     #left { right: 160px; bottom: 40px; }
     #right { right: 30px; bottom: 40px; }
+
+    #loading {
+      color: white;
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      font-family: monospace;
+    }
   </style>
 </head>
 <body>
-  <p style="color:white; text-align:center;">Loading game.js...</p>
+  <p id="loading">Loading game.js...</p>
   <canvas id="game"></canvas>
 
   <div class="controls">
@@ -66,8 +76,13 @@
     <div id="right" class="btn"></div>
   </div>
 
-    <script src="game.js?v=1005"></script>
   <script>
+    // Remove "Loading..." once the game script loads
+    function removeLoadingText() {
+      const p = document.getElementById('loading');
+      if (p) p.remove();
+    }
+
     // Unregister any old service workers and clear caches so the latest files load
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(regs => {
@@ -84,5 +99,8 @@
     );
     document.addEventListener('touchmove', e => { if (e.scale !== 1) e.preventDefault(); }, {passive:false});
   </script>
+
+  <!-- load the game and remove loading text when done -->
+  <script src="game.js?v=1006" onload="removeLoadingText()"></script>
 </body>
 </html>
