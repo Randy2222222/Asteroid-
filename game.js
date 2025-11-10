@@ -4,6 +4,21 @@ window.onload = function() {
   const ctx = canvas.getContext("2d");
   let w, h;
 
+    const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+let w, h;
+
+// Sound effects
+const sndThrust = new Audio("thrust.mp3");
+const sndFire = new Audio("fire.mp3");
+const sndExplode = new Audio("explode.mp3");
+
+// Allow quick restart of short sounds
+[sndThrust, sndFire, sndExplode].forEach(s => {
+  s.preload = "auto";
+  s.load();
+});
+
   // Disable pinch and double-tap zoom in Safari
   document.addEventListener('touchstart', function(event) {
     if (event.touches.length > 1) {
@@ -163,6 +178,8 @@ window.onload = function() {
     if (Math.sqrt(dx * dx + dy * dy) < a.r + ship.r) {
       ship.lives--;
       if (ship.lives <= 0) {
+          sndExplode.currentTime = 0;
+sndExplode.play();
   // Show Game Over message on canvas instead of using alert
   ctx.fillStyle = "red";
   ctx.font = "40px monospace";
@@ -204,9 +221,21 @@ window.onload = function() {
   update();
 
   // Touch controls
-  document.getElementById("thrust").ontouchstart = () => ship.thrusting = true;
-  document.getElementById("thrust").ontouchend = () => ship.thrusting = false;
-  document.getElementById("fire").ontouchstart = () => bullets.push(new Bullet(ship.x, ship.y, ship.a));
+  document.getElementById("thrust").ontouchstart = () => {
+  ship.thrusting = true;
+  sndThrust.currentTime = 0;
+  sndThrust.play();
+};
+document.getElementById("thrust").ontouchend = () => {
+  ship.thrusting = false;
+  sndThrust.pause();
+  sndThrust.currentTime = 0;
+};
+  document.getElementById("fire").ontouchstart = () => {
+  sndFire.currentTime = 0;
+  sndFire.play();
+  bullets.push(new Bullet(ship.x, ship.y, ship.a));
+};
   document.getElementById("left").ontouchstart = () => ship.rot = -0.1;
   document.getElementById("left").ontouchend = () => ship.rot = 0;
   document.getElementById("right").ontouchstart = () => ship.rot = 0.1;
