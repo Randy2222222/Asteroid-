@@ -163,10 +163,24 @@ window.onload = function() {
     if (Math.sqrt(dx * dx + dy * dy) < a.r + ship.r) {
       ship.lives--;
       if (ship.lives <= 0) {
-        alert("Game Over!");
-        score = 0;
-        ship.lives = 3;
-      }
+  // Show Game Over message on canvas instead of using alert
+  ctx.fillStyle = "red";
+  ctx.font = "40px monospace";
+  ctx.textAlign = "center";
+  ctx.fillText("GAME OVER", w / 2, h / 2);
+  cancelAnimationFrame(update); // stop game loop
+  setTimeout(() => {
+    // reset after 2 seconds
+    ship.lives = 3;
+    score = 0;
+    ship.x = w / 2;
+    ship.y = h / 2;
+    ship.thrust = { x: 0, y: 0 };
+    resetAsteroids();
+    requestAnimationFrame(update);
+  }, 2000);
+  return;
+}
       ship.x = w / 2;
       ship.y = h / 2;
       ship.thrust = { x: 0, y: 0 };
