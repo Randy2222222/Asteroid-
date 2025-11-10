@@ -1,3 +1,4 @@
+alert("✅ game.js loaded successfully!");
 window.onload = function() {
   const canvas = document.getElementById("game");
   const ctx = canvas.getContext("2d");
