@@ -234,14 +234,13 @@ boom.play();
   const rightBtn = document.getElementById("right");
 
   thrustBtn.ontouchstart = () => {
-    ship.thrusting = true;
-    sndThrust.play();
-  };
-  thrustBtn.ontouchend = () => {
-    ship.thrusting = false;
-    sndThrust.pause();
-    sndThrust.currentTime = 0;
-  };
+  ship.thrusting = true;
+  audioCtx.resume(); // ensure context is active
+};
+
+thrustBtn.ontouchend = () => {
+  ship.thrusting = false;
+};
 
   // Continuous firing while holding
   let fireInterval = null;
