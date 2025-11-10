@@ -173,7 +173,11 @@ window.onload = function() {
       if (Math.sqrt(dx*dx+dy*dy) < a.r + ship.r) {
         ship.lives--;
         const boom = sndExplode.cloneNode();
-        boom.play();
+const src = audioCtx.createMediaElementSource(boom);
+const gain = audioCtx.createGain();
+gain.gain.value = 1.8; // 💥 Boost volume — 1.0 = normal, 1.8 = ~80% louder
+src.connect(gain).connect(audioCtx.destination);
+boom.play();
         if (ship.lives <= 0) {
           ctx.fillStyle = "red";
           ctx.font = "40px monospace";
