@@ -1,4 +1,4 @@
-
+alert("✅ game.js is definitely running on iPadOS 26.0.1!");
 window.onload = function() {
   const canvas = document.getElementById("game");
   const ctx = canvas.getContext("2d");
