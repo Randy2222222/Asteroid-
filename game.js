@@ -21,11 +21,6 @@ sndThrust.loop = true;
   s.load();
 });
 
-  sndThrust.loop = true;
-  [sndThrust, sndFire, sndExplode].forEach(s => {
-    s.preload = "auto";
-    s.load();
-  });
 
   // Disable pinch and double-tap zoom (iPad Safari fix)
   document.addEventListener('touchstart', function(event) {
