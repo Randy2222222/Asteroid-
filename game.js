@@ -4,9 +4,22 @@ window.onload = function() {
   let w, h;
 
   // Sound effects
-  const sndThrust = new Audio("thrust.mp3");
-  const sndFire = new Audio("fire.mp3");
-  const sndExplode = new Audio("explode.mp3");
+const sndThrust = new Audio("thrust.mp3");
+const sndFire = new Audio("fire.mp3");
+const sndExplode = new Audio("explode.mp3");
+
+// 🎧 Add AudioContext for volume control (thrust fade & boost)
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let thrustGainNode = audioCtx.createGain();
+thrustGainNode.gain.value = 0; // start silent
+let thrustSource = audioCtx.createMediaElementSource(sndThrust);
+thrustSource.connect(thrustGainNode).connect(audioCtx.destination);
+
+sndThrust.loop = true;
+[sndThrust, sndFire, sndExplode].forEach(s => {
+  s.preload = "auto";
+  s.load();
+});
 
   sndThrust.loop = true;
   [sndThrust, sndFire, sndExplode].forEach(s => {
