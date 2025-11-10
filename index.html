@@ -43,7 +43,6 @@
   </style>
 </head>
 <body>
-  <p style="color:white; text-align:center;">Loading game.js...</p>
   <canvas id="game"></canvas>
 
   <div class="controls">
@@ -53,22 +52,18 @@
     <div id="right" class="btn"></div>
   </div>
 
-  
-
-    <script src="./game.js?v=1001"></script>
-<script>
-  // Completely remove old service workers and caches
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(regs => {
-      for (let reg of regs) {
-        reg.unregister();
+  <script src="./game.js?v=1002"></script>
+  <script>
+    // Completely remove old service workers and caches
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(regs => {
+        for (const reg of regs) reg.unregister();
+      });
+      if (window.caches) {
+        caches.keys().then(keys => keys.forEach(key => caches.delete(key)));
       }
-    });
-    if (window.caches) {
-      caches.keys().then(keys => keys.forEach(key => caches.delete(key)));
     }
-  }
-</script>
+  </script>
 </body>
-</html><!--
+</html>
 
